@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>แจ้งลาเรียนออนไลน์</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans",sans-serif;padding:16px;background:#f8fafc;color:#0f172a}
+    .card{max-width:720px;margin:0 auto;background:#fff;padding:16px;border-radius:8px;box-shadow:0 1px 3px rgba(2,6,23,0.06)}
+    label{display:block;margin-top:8px;font-size:14px}
+    input,select,textarea{width:100%;padding:8px;margin-top:6px;border:1px solid #e6eef8;border-radius:6px}
+    .row{display:flex;gap:8px}
+    .row > *{flex:1}
+    button{background:#1e40af;color:#fff;padding:10px;border:0;border-radius:8px;margin-top:12px;cursor:pointer}
+    .muted{font-size:13px;color:#6b7280}
+  </style>
+  <script>
+    async function submitForm(e){
+      e.preventDefault();
+      const payload = {
+        token: "YOUR_SECRET_TOKEN",
+        studentName: document.getElementById('studentName').value.trim(),
+        grade: document.getElementById('grade').value,
+        leaveType: document.querySelector('input[name="leaveType"]:checked').value,
+        startDate: document.getElementById('startDate').value,
+        endDate: document.getElementById('endDate').value,
+        singleDate: document.getElementById('singleDate').value,
+        periods: Array.from(document.querySelectorAll('input[name="period"]:checked')).map(i=>i.value),
+        reason: document.getElementById('reason').value.trim()
+      };
+
+      // Basic client validation
+      if(!payload.studentName){ alert("กรุณากรอกชื่อ-นามสกุลนักเรียน"); return; }
+      if(!payload.grade){ alert("กรุณาเลือกระดับชั้น"); return; }
+      if(!document.getElementById('policy').checked){ alert("โปรดยอมรับนโยบายการลา"); return; }
+
+      const url = "YOUR_WEB_APP_URL";
+      try {
+        const res = await fetch(url, {
+          method: "POST",
+          headers: {"Content-Type":"application/json"},
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if(data.ok){
+          alert("บันทึกการแจ้งลาสำเร็จ โรงเรียนได้รับข้อมูลแล้ว");
+          document.getElementById('leaveForm').reset();
+        } else {
+          alert("เกิดข้อผิดพลาด: " + (data.error || "ไม่ทราบสาเหตุ"));
+        }
+      } catch(err){
+        alert("ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้");
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="card">
+    <h2>ระบบแจ้งลาเรียนออนไลน์</h2>
+    <p class="muted">กรอกข้อมูลแล้วกดยืนยัน ระบบจะส่งข้อมูลไปยังโรงเรียน</p>
+
+    <form id="leaveForm" onsubmit="submitForm(event)">
+      <label>ชื่อ-นามสกุล นักเรียน *</label>
+      <input id="studentName" required />
+
+      <label>ระดับชั้น/เกรด *</label>
+      <select id="grade" required>
+        <option value="">-- เลือก --</option>
+        <option>ป.1</option><option>ป.2</option><option>ป.3</option><option>ป.4</option>
+        <option>ป.5</option><option>ป.6</option><option>ม.1</option><option>ม.2</option>
+        <option>ม.3</option><option>ม.4</option><option>ม.5</option><option>ม.6</option>
+      </select>
+
+      <label>รูปแบบการลา</label>
+      <div>
+        <label><input type="radio" name="leaveType" value="full" checked> ลาเต็มวัน</label>
+        <label><input type="radio" name="leaveType" value="period"> ลาแบบเลือกคาบเรียน</label>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>วันที่เริ่ม</label>
+          <input type="date" id="startDate" />
+        </div>
+        <div>
+          <label>วันที่สิ้นสุด</label>
+          <input type="date" id="endDate" />
+        </div>
+      </div>
+
+      <label>วันที่ (สำหรับเลือกคาบ)</label>
+      <input type="date" id="singleDate" />
+
+      <label>คาบเรียน</label>
+      <div>
+        <label><input type="checkbox" name="period" value="คาบ 1"> คาบ 1</label>
+        <label><input type="checkbox" name="period" value="คาบ 2"> คาบ 2</label>
+        <label><input type="checkbox" name="period" value="คาบ 3"> คาบ 3</label>
+        <label><input type="checkbox" name="period" value="คาบ 4"> คาบ 4</label>
+      </div>
+
+      <label>เหตุผลการลา</label>
+      <textarea id="reason" rows="3"></textarea>
+
+      <label><input type="checkbox" id="policy"> ข้าพเจ้าได้อ่านและยอมรับนโยบายการลาของโรงเรียนแล้ว *</label>
+
+      <button type="submit">ยืนยันการแจ้งลา</button>
+    </form>
+  </div>
+</body>
+</html>
