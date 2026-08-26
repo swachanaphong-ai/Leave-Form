@@ -4,131 +4,198 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>แจ้งลาเรียนออนไลน์</title>
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome สำหรับ Icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Prompt -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Prompt', sans-serif; }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
-  <div class="max-w-md mx-auto mt-6 bg-white p-6 rounded-lg shadow">
-    <!-- ปุ่มเปลี่ยนภาษา -->
-    <div class="flex justify-end mb-4">
-      <button id="langToggle" type="button" class="px-3 py-1 rounded bg-blue-600 text-white text-sm">English</button>
+<body class="bg-slate-100 text-slate-700 min-h-screen py-10 px-4 flex justify-center items-center">
+
+  <div class="w-full max-w-lg bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100">
+    
+    <!-- Top Header Bar -->
+    <div class="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-white relative">
+      <div class="flex justify-between items-center mb-2">
+        <span class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md text-white text-xs px-3 py-1 rounded-full font-medium">
+          <i class="fa-solid fa-graduation-cap"></i> School Portal
+        </span>
+        <!-- ปุ่มเปลี่ยนภาษา -->
+        <button id="langToggle" type="button" class="px-3 py-1 rounded-full bg-white/20 hover:bg-white/30 text-white text-xs transition duration-200 backdrop-blur-md flex items-center gap-1.5 font-medium">
+          <i class="fa-solid fa-globe"></i> <span>English</span>
+        </button>
+      </div>
+      <h1 id="formTitle" class="text-2xl font-bold tracking-tight">ระบบแจ้งลาเรียนออนไลน์</h1>
+      <p id="formSubTitle" class="text-blue-100 text-xs mt-1">กรอกข้อมูลการแจ้งลาของนักเรียนผ่านระบบอิเล็กทรอนิกส์</p>
     </div>
 
-    <h1 id="formTitle" class="text-xl font-semibold text-blue-700 mb-4">ระบบแจ้งลาเรียนออนไลน์</h1>
-    
-    <form id="leaveForm" class="space-y-4">
-      <!-- ชื่อ -->
+    <!-- Form Container -->
+    <form id="leaveForm" class="p-6 space-y-5">
+      
+      <!-- ชื่อ-นามสกุล -->
       <div>
-        <label id="studentLabel" class="block text-sm font-medium">ชื่อ-นามสกุล นักเรียน *</label>
-        <input type="text" class="mt-1 w-full border rounded px-3 py-2" required>
+        <label id="studentLabel" class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1.5">ชื่อ-นามสกุล นักเรียน *</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+            <i class="fa-regular fa-user"></i>
+          </div>
+          <input type="text" class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition duration-200" required placeholder="ด.ช. สมชาย ใจดี">
+        </div>
       </div>
 
       <!-- ระดับชั้น -->
       <div>
-        <label id="gradeLabel" class="block text-sm font-medium">ระดับชั้น *</label>
-        <select class="mt-1 w-full border rounded px-3 py-2" required>
-          <option id="optSelectGrade" value="">-- เลือก --</option>
-          <option>Nursery</option>
-          <option>Kindergarten 1</option>
-          <option>Kindergarten 2</option>
-          <option>Kindergarten 3</option>
-          <option>Grade 1</option><option>Grade 2</option><option>Grade 3</option>
-          <option>Grade 4</option><option>Grade 5</option><option>Grade 6</option>
-          <option>Grade 7</option><option>Grade 8</option><option>Grade 9</option>
-          <option>Grade 10</option><option>Grade 11</option><option>Grade 12</option>
-        </select>
+        <label id="gradeLabel" class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1.5">ระดับชั้น *</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+            <i class="fa-solid fa-school"></i>
+          </div>
+          <select class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition duration-200 appearance-none" required>
+            <option id="optSelectGrade" value="">-- เลือก --</option>
+            <option>Nursery</option>
+            <option>Kindergarten 1</option>
+            <option>Kindergarten 2</option>
+            <option>Kindergarten 3</option>
+            <option>Grade 1</option><option>Grade 2</option><option>Grade 3</option>
+            <option>Grade 4</option><option>Grade 5</option><option>Grade 6</option>
+            <option>Grade 7</option><option>Grade 8</option><option>Grade 9</option>
+            <option>Grade 10</option><option>Grade 11</option><option>Grade 12</option>
+          </select>
+          <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
+            <i class="fa-solid fa-chevron-down text-xs"></i>
+          </div>
+        </div>
       </div>
 
       <!-- รูปแบบการลา -->
       <div>
-        <label id="leaveTypeLabel" class="block text-sm font-medium">รูปแบบการลา</label>
-        <div class="flex gap-2 mt-2">
-          <button type="button" id="btnFull" class="px-3 py-1.5 rounded bg-blue-600 text-white">ลาเต็มวัน</button>
-          <button type="button" id="btnPeriod" class="px-3 py-1.5 rounded bg-gray-200">ลาแบบเลือกคาบ</button>
+        <label id="leaveTypeLabel" class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1.5">รูปแบบการลา</label>
+        <div class="grid grid-cols-2 gap-2 p-1 bg-slate-100 rounded-xl">
+          <button type="button" id="btnFull" class="py-2 px-3 rounded-lg text-xs font-semibold bg-white text-indigo-600 shadow-sm transition duration-200 flex items-center justify-center gap-2">
+            <i class="fa-regular fa-calendar-days"></i> <span id="btnFullText">ลาเต็มวัน</span>
+          </button>
+          <button type="button" id="btnPeriod" class="py-2 px-3 rounded-lg text-xs font-semibold text-slate-500 hover:text-slate-700 transition duration-200 flex items-center justify-center gap-2">
+            <i class="fa-regular fa-clock"></i> <span id="btnPeriodText">ลาแบบเลือกคาบ</span>
+          </button>
         </div>
       </div>
 
       <!-- Date Range สำหรับลาเต็มวัน -->
-      <div id="fullDaySection" class="grid grid-cols-2 gap-2">
+      <div id="fullDaySection" class="grid grid-cols-2 gap-3 bg-slate-50 p-3.5 rounded-xl border border-slate-100">
         <div>
-          <label id="startLabel" class="text-sm">วันที่เริ่ม</label>
-          <input type="date" class="mt-1 w-full border rounded px-3 py-2">
+          <label id="startLabel" class="block text-xs font-medium text-slate-500 mb-1">วันที่เริ่ม</label>
+          <input type="date" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
         </div>
         <div>
-          <label id="endLabel" class="text-sm">วันที่สิ้นสุด</label>
-          <input type="date" class="mt-1 w-full border rounded px-3 py-2">
+          <label id="endLabel" class="block text-xs font-medium text-slate-500 mb-1">วันที่สิ้นสุด</label>
+          <input type="date" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
         </div>
       </div>
 
       <!-- Date + Periods สำหรับลาแบบคาบ -->
-      <div id="periodSection" class="hidden space-y-2">
+      <div id="periodSection" class="hidden space-y-3 bg-slate-50 p-3.5 rounded-xl border border-slate-100">
         <div>
-          <label id="singleDateLabel" class="text-sm">วันที่</label>
-          <input type="date" class="mt-1 w-full border rounded px-3 py-2">
+          <label id="singleDateLabel" class="block text-xs font-medium text-slate-500 mb-1">วันที่</label>
+          <input type="date" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
         </div>
         <div>
-          <label id="periodLabel" class="text-sm">คาบเรียนที่ต้องการลา</label>
-          <div class="grid grid-cols-2 gap-2 mt-2">
-            <label><input type="checkbox" value="คาบ 1"> <span class="p-text">คาบ 1</span></label>
-            <label><input type="checkbox" value="คาบ 2"> <span class="p-text">คาบ 2</span></label>
-            <label><input type="checkbox" value="คาบ 3"> <span class="p-text">คาบ 3</span></label>
-            <label><input type="checkbox" value="คาบ 4"> <span class="p-text">คาบ 4</span></label>
-            <label><input type="checkbox" value="คาบ 5"> <span class="p-text">คาบ 5</span></label>
-            <label><input type="checkbox" value="คาบ 6"> <span class="p-text">คาบ 6</span></label>
-            <label><input type="checkbox" value="คาบ 7"> <span class="p-text">คาบ 7</span></label>
+          <label id="periodLabel" class="block text-xs font-medium text-slate-500 mb-2">คาบเรียนที่ต้องการลา</label>
+          <div class="grid grid-cols-4 gap-2">
+            <label class="cursor-pointer border border-slate-200 bg-white rounded-lg p-2 text-center hover:border-indigo-500 transition has-[:checked]:border-indigo-600 has-[:checked]:bg-indigo-50 has-[:checked]:text-indigo-600">
+              <input type="checkbox" value="คาบ 1" class="hidden">
+              <span class="text-xs font-medium p-text">คาบ 1</span>
+            </label>
+            <label class="cursor-pointer border border-slate-200 bg-white rounded-lg p-2 text-center hover:border-indigo-500 transition has-[:checked]:border-indigo-600 has-[:checked]:bg-indigo-50 has-[:checked]:text-indigo-600">
+              <input type="checkbox" value="คาบ 2" class="hidden">
+              <span class="text-xs font-medium p-text">คาบ 2</span>
+            </label>
+            <label class="cursor-pointer border border-slate-200 bg-white rounded-lg p-2 text-center hover:border-indigo-500 transition has-[:checked]:border-indigo-600 has-[:checked]:bg-indigo-50 has-[:checked]:text-indigo-600">
+              <input type="checkbox" value="คาบ 3" class="hidden">
+              <span class="text-xs font-medium p-text">คาบ 3</span>
+            </label>
+            <label class="cursor-pointer border border-slate-200 bg-white rounded-lg p-2 text-center hover:border-indigo-500 transition has-[:checked]:border-indigo-600 has-[:checked]:bg-indigo-50 has-[:checked]:text-indigo-600">
+              <input type="checkbox" value="คาบ 4" class="hidden">
+              <span class="text-xs font-medium p-text">คาบ 4</span>
+            </label>
+            <label class="cursor-pointer border border-slate-200 bg-white rounded-lg p-2 text-center hover:border-indigo-500 transition has-[:checked]:border-indigo-600 has-[:checked]:bg-indigo-50 has-[:checked]:text-indigo-600">
+              <input type="checkbox" value="คาบ 5" class="hidden">
+              <span class="text-xs font-medium p-text">คาบ 5</span>
+            </label>
+            <label class="cursor-pointer border border-slate-200 bg-white rounded-lg p-2 text-center hover:border-indigo-500 transition has-[:checked]:border-indigo-600 has-[:checked]:bg-indigo-50 has-[:checked]:text-indigo-600">
+              <input type="checkbox" value="คาบ 6" class="hidden">
+              <span class="text-xs font-medium p-text">คาบ 6</span>
+            </label>
+            <label class="cursor-pointer border border-slate-200 bg-white rounded-lg p-2 text-center hover:border-indigo-500 transition has-[:checked]:border-indigo-600 has-[:checked]:bg-indigo-50 has-[:checked]:text-indigo-600">
+              <input type="checkbox" value="คาบ 7" class="hidden">
+              <span class="text-xs font-medium p-text">คาบ 7</span>
+            </label>
           </div>
         </div>
       </div>
 
       <!-- เหตุผลการลา -->
       <div>
-        <label id="reasonLabel" class="block text-sm font-medium">เหตุผลการลา *</label>
-        <select id="reasonSelect" class="mt-1 w-full border rounded px-3 py-2" required>
-          <option id="optSelectReason" value="">-- เลือกเหตุผล --</option>
-          <option id="optSick" value="sick">ป่วย</option>
-          <option id="optSport" value="sport">แข่งกีฬา</option>
-          <option id="optFamily" value="family">ธุระครอบครัว</option>
-          <option id="optOther" value="other">อื่นๆ</option>
-        </select>
-        <textarea id="reasonExtra" rows="3" class="mt-2 w-full border rounded px-3 py-2 hidden" placeholder="โปรดระบุเหตุผลเพิ่มเติม"></textarea>
+        <label id="reasonLabel" class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1.5">เหตุผลการลา *</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+            <i class="fa-regular fa-comment-dots"></i>
+          </div>
+          <select id="reasonSelect" class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition duration-200 appearance-none" required>
+            <option id="optSelectReason" value="">-- เลือกเหตุผล --</option>
+            <option id="optSick" value="sick">ป่วย</option>
+            <option id="optSport" value="sport">แข่งกีฬา</option>
+            <option id="optFamily" value="family">ธุระครอบครัว</option>
+            <option id="optOther" value="other">อื่นๆ</option>
+          </select>
+          <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
+            <i class="fa-solid fa-chevron-down text-xs"></i>
+          </div>
+        </div>
+        <textarea id="reasonExtra" rows="3" class="mt-2.5 w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition duration-200 hidden" placeholder="โปรดระบุเหตุผลเพิ่มเติม"></textarea>
       </div>
 
       <!-- นโยบาย -->
-      <div>
-        <label id="policyTitleLabel" class="block text-sm font-medium">นโยบายการลา</label>
-        <div id="policyBox" class="border rounded p-2 h-24 overflow-y-auto text-sm bg-gray-50">
-          กรุณาแจ้งลาล่วงหน้าอย่างน้อย 1 วัน หากป่วยกะทันหันโปรดส่งใบรับรองแพทย์ย้อนหลัง
+      <div class="pt-2 border-t border-slate-100">
+        <label id="policyTitleLabel" class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1.5">นโยบายการลา</label>
+        <div id="policyBox" class="border border-slate-100 rounded-xl p-3 h-20 overflow-y-auto text-xs bg-slate-50 text-slate-500 leading-relaxed">
+          กรุณาแจ้งลาล่วงหน้าอย่างน้อย 1 วัน หากป่วยกะทันหันโปรดส่งใบรับรองแพทย์ย้อนหลังภายใน 3 วันทำการ
         </div>
-        <label class="flex items-center gap-2 text-sm mt-2">
-          <input type="checkbox" required>
+        <label class="flex items-start gap-2 text-xs text-slate-600 mt-3 cursor-pointer select-none">
+          <input type="checkbox" required class="mt-0.5 rounded text-indigo-600 focus:ring-indigo-500 border-slate-300">
           <span id="policyLabel">ข้าพเจ้าได้อ่านและยอมรับนโยบายการลาของโรงเรียนแล้ว</span>
         </label>
       </div>
 
-      <button id="submitBtn" type="submit" class="w-full py-2 rounded bg-blue-600 text-white">ยืนยันการแจ้งลา</button>
+      <!-- ปุ่มส่งฟอร์ม -->
+      <button id="submitBtn" type="submit" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium shadow-lg shadow-indigo-200 hover:shadow-indigo-300 transition duration-200 transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2">
+        <i class="fa-solid fa-paper-plane text-xs"></i> <span>ยืนยันการแจ้งลา</span>
+      </button>
     </form>
   </div>
 
   <script>
-    // Toggle sections
+    // Toggle sections logic
     const btnFull = document.getElementById('btnFull');
     const btnPeriod = document.getElementById('btnPeriod');
     const fullDaySection = document.getElementById('fullDaySection');
     const periodSection = document.getElementById('periodSection');
 
     btnFull.addEventListener('click', () => {
-      btnFull.classList.add('bg-blue-600','text-white');
-      btnFull.classList.remove('bg-gray-200');
-      btnPeriod.classList.remove('bg-blue-600','text-white');
-      btnPeriod.classList.add('bg-gray-200');
+      btnFull.className = "py-2 px-3 rounded-lg text-xs font-semibold bg-white text-indigo-600 shadow-sm transition duration-200 flex items-center justify-center gap-2";
+      btnPeriod.className = "py-2 px-3 rounded-lg text-xs font-semibold text-slate-500 hover:text-slate-700 transition duration-200 flex items-center justify-center gap-2";
       fullDaySection.classList.remove('hidden');
       periodSection.classList.add('hidden');
     });
 
     btnPeriod.addEventListener('click', () => {
-      btnPeriod.classList.add('bg-blue-600','text-white');
-      btnPeriod.classList.remove('bg-gray-200');
-      btnFull.classList.remove('bg-blue-600','text-white');
-      btnFull.classList.add('bg-gray-200');
+      btnPeriod.className = "py-2 px-3 rounded-lg text-xs font-semibold bg-white text-indigo-600 shadow-sm transition duration-200 flex items-center justify-center gap-2";
+      btnFull.className = "py-2 px-3 rounded-lg text-xs font-semibold text-slate-500 hover:text-slate-700 transition duration-200 flex items-center justify-center gap-2";
       fullDaySection.classList.add('hidden');
       periodSection.classList.remove('hidden');
     });
@@ -149,7 +216,7 @@
       }
     });
 
-    // Language toggle logic
+    // Bilingual Logic
     let currentLang = 'th';
     const langToggle = document.getElementById('langToggle');
 
@@ -157,12 +224,13 @@
       th: {
         toggleBtn: "English",
         formTitle: "ระบบแจ้งลาเรียนออนไลน์",
+        formSubTitle: "กรอกข้อมูลการแจ้งลาของนักเรียนผ่านระบบอิเล็กทรอนิกส์",
         studentLabel: "ชื่อ-นามสกุล นักเรียน *",
         gradeLabel: "ระดับชั้น *",
         optSelectGrade: "-- เลือก --",
         leaveTypeLabel: "รูปแบบการลา",
-        btnFull: "ลาเต็มวัน",
-        btnPeriod: "ลาแบบเลือกคาบ",
+        btnFullText: "ลาเต็มวัน",
+        btnPeriodText: "ลาแบบเลือกคาบ",
         startLabel: "วันที่เริ่ม",
         endLabel: "วันที่สิ้นสุด",
         singleDateLabel: "วันที่",
@@ -176,19 +244,20 @@
         optOther: "อื่นๆ",
         reasonPlaceholder: "โปรดระบุเหตุผลเพิ่มเติม",
         policyTitleLabel: "นโยบายการลา",
-        policyBox: "กรุณาแจ้งลาล่วงหน้าอย่างน้อย 1 วัน หากป่วยกะทันหันโปรดส่งใบรับรองแพทย์ย้อนหลัง",
+        policyBox: "กรุณาแจ้งลาล่วงหน้าอย่างน้อย 1 วัน หากป่วยกะทันหันโปรดส่งใบรับรองแพทย์ย้อนหลังภายใน 3 วันทำการ",
         policyLabel: "ข้าพเจ้าได้อ่านและยอมรับนโยบายการลาของโรงเรียนแล้ว",
         submitBtn: "ยืนยันการแจ้งลา"
       },
       en: {
         toggleBtn: "ไทย",
-        formTitle: "Online Student Leave System",
+        formTitle: "Online Student Leave Form",
+        formSubTitle: "Submit student leave request online",
         studentLabel: "Student Full Name *",
         gradeLabel: "Grade / Class *",
         optSelectGrade: "-- Select --",
         leaveTypeLabel: "Leave Type",
-        btnFull: "Full Day Leave",
-        btnPeriod: "Period Leave",
+        btnFullText: "Full Day Leave",
+        btnPeriodText: "Period Leave",
         startLabel: "Start Date",
         endLabel: "End Date",
         singleDateLabel: "Date",
@@ -202,7 +271,7 @@
         optOther: "Other",
         reasonPlaceholder: "Please provide additional details",
         policyTitleLabel: "School Leave Policy",
-        policyBox: "Please inform at least 1 day in advance. Medical certificate required for sick leave.",
+        policyBox: "Please inform at least 1 day in advance. Medical certificate required for sick leave within 3 business days.",
         policyLabel: "I have read and agree to the school leave policy.",
         submitBtn: "Submit Leave Request"
       }
@@ -212,14 +281,15 @@
       currentLang = currentLang === 'th' ? 'en' : 'th';
       const t = dictionary[currentLang];
 
-      langToggle.textContent = t.toggleBtn;
+      langToggle.querySelector('span').textContent = t.toggleBtn;
       document.getElementById('formTitle').textContent = t.formTitle;
+      document.getElementById('formSubTitle').textContent = t.formSubTitle;
       document.getElementById('studentLabel').textContent = t.studentLabel;
       document.getElementById('gradeLabel').textContent = t.gradeLabel;
       document.getElementById('optSelectGrade').textContent = t.optSelectGrade;
       document.getElementById('leaveTypeLabel').textContent = t.leaveTypeLabel;
-      document.getElementById('btnFull').textContent = t.btnFull;
-      document.getElementById('btnPeriod').textContent = t.btnPeriod;
+      document.getElementById('btnFullText').textContent = t.btnFullText;
+      document.getElementById('btnPeriodText').textContent = t.btnPeriodText;
       document.getElementById('startLabel').textContent = t.startLabel;
       document.getElementById('endLabel').textContent = t.endLabel;
       document.getElementById('singleDateLabel').textContent = t.singleDateLabel;
@@ -234,9 +304,8 @@
       document.getElementById('policyTitleLabel').textContent = t.policyTitleLabel;
       document.getElementById('policyBox').textContent = t.policyBox;
       document.getElementById('policyLabel').textContent = t.policyLabel;
-      document.getElementById('submitBtn').textContent = t.submitBtn;
+      document.getElementById('submitBtn').querySelector('span').textContent = t.submitBtn;
 
-      // Update period checkbox labels
       document.querySelectorAll('.p-text').forEach((span, index) => {
         span.textContent = `${t.periodText}${index + 1}`;
       });
