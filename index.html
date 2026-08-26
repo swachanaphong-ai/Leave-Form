@@ -139,12 +139,13 @@
         reasonExtra.classList.remove('hidden');
         reasonExtra.required = true;
       } else {
-        reasonExtra.classList.add('hidden');
+        reasonExtra.classList.remove('hidden');
         reasonExtra.required = false;
+        reasonExtra.placeholder = "อธิบายเพิ่มเติม (ถ้ามี)";
       }
     });
 
-    // Language toggle (เหมือนเดิม)
+    // Language toggle
     const langToggle = document.getElementById('langToggle');
     const labels = {
       th: {
@@ -153,8 +154,4 @@
         gradeLabel: "ระดับชั้น *",
         leaveTypeLabel: "รูปแบบการลา",
         startLabel: "วันที่เริ่ม",
-        endLabel: "วันที่สิ้นสุด",
-        singleDateLabel: "วันที่",
-        periodLabel: "คาบเรียนที่ต้องการลา",
-        reasonLabel: "เหตุผลการลา *",
-        policy
+        endLabel: "วันที่
