@@ -4,108 +4,157 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>แจ้งลาเรียนออนไลน์</title>
-  <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans",sans-serif;padding:16px;background:#f8fafc;color:#0f172a}
-    .card{max-width:720px;margin:0 auto;background:#fff;padding:16px;border-radius:8px;box-shadow:0 1px 3px rgba(2,6,23,0.06)}
-    label{display:block;margin-top:8px;font-size:14px}
-    input,select,textarea{width:100%;padding:8px;margin-top:6px;border:1px solid #e6eef8;border-radius:6px}
-    .row{display:flex;gap:8px}
-    .row > *{flex:1}
-    button{background:#1e40af;color:#fff;padding:10px;border:0;border-radius:8px;margin-top:12px;cursor:pointer}
-    .muted{font-size:13px;color:#6b7280}
-  </style>
-  <script>
-    async function submitForm(e){
-      e.preventDefault();
-      const payload = {
-        token: "YOUR_SECRET_TOKEN",
-        studentName: document.getElementById('studentName').value.trim(),
-        grade: document.getElementById('grade').value,
-        leaveType: document.querySelector('input[name="leaveType"]:checked').value,
-        startDate: document.getElementById('startDate').value,
-        endDate: document.getElementById('endDate').value,
-        singleDate: document.getElementById('singleDate').value,
-        periods: Array.from(document.querySelectorAll('input[name="period"]:checked')).map(i=>i.value),
-        reason: document.getElementById('reason').value.trim()
-      };
-
-      // Basic client validation
-      if(!payload.studentName){ alert("กรุณากรอกชื่อ-นามสกุลนักเรียน"); return; }
-      if(!payload.grade){ alert("กรุณาเลือกระดับชั้น"); return; }
-      if(!document.getElementById('policy').checked){ alert("โปรดยอมรับนโยบายการลา"); return; }
-
-      const url = "YOUR_WEB_APP_URL";
-      try {
-        const res = await fetch(url, {
-          method: "POST",
-          headers: {"Content-Type":"application/json"},
-          body: JSON.stringify(payload)
-        });
-        const data = await res.json();
-        if(data.ok){
-          alert("บันทึกการแจ้งลาสำเร็จ โรงเรียนได้รับข้อมูลแล้ว");
-          document.getElementById('leaveForm').reset();
-        } else {
-          alert("เกิดข้อผิดพลาด: " + (data.error || "ไม่ทราบสาเหตุ"));
-        }
-      } catch(err){
-        alert("ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้");
-      }
-    }
-  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <div class="card">
-    <h2>ระบบแจ้งลาเรียนออนไลน์</h2>
-    <p class="muted">กรอกข้อมูลแล้วกดยืนยัน ระบบจะส่งข้อมูลไปยังโรงเรียน</p>
+<body class="bg-gray-50 text-gray-800">
+  <div class="max-w-md mx-auto mt-6 bg-white p-6 rounded-lg shadow">
+    <!-- ปุ่มเปลี่ยนภาษา -->
+    <div class="flex justify-end mb-4">
+      <button id="langToggle" class="px-3 py-1 rounded bg-blue-600 text-white text-sm">English</button>
+    </div>
 
-    <form id="leaveForm" onsubmit="submitForm(event)">
-      <label>ชื่อ-นามสกุล นักเรียน *</label>
-      <input id="studentName" required />
-
-      <label>ระดับชั้น/เกรด *</label>
-      <select id="grade" required>
-        <option value="">-- เลือก --</option>
-        <option>ป.1</option><option>ป.2</option><option>ป.3</option><option>ป.4</option>
-        <option>ป.5</option><option>ป.6</option><option>ม.1</option><option>ม.2</option>
-        <option>ม.3</option><option>ม.4</option><option>ม.5</option><option>ม.6</option>
-      </select>
-
-      <label>รูปแบบการลา</label>
+    <h1 id="formTitle" class="text-xl font-semibold text-blue-700 mb-4">ระบบแจ้งลาเรียนออนไลน์</h1>
+    
+    <form id="leaveForm" class="space-y-4">
+      <!-- ชื่อ -->
       <div>
-        <label><input type="radio" name="leaveType" value="full" checked> ลาเต็มวัน</label>
-        <label><input type="radio" name="leaveType" value="period"> ลาแบบเลือกคาบเรียน</label>
+        <label id="studentLabel" class="block text-sm font-medium">ชื่อ-นามสกุล นักเรียน *</label>
+        <input type="text" class="mt-1 w-full border rounded px-3 py-2" required>
       </div>
 
-      <div class="row">
+      <!-- ระดับชั้น -->
+      <div>
+        <label id="gradeLabel" class="block text-sm font-medium">ระดับชั้น *</label>
+        <select class="mt-1 w-full border rounded px-3 py-2" required>
+          <option value="">-- เลือก --</option>
+          <option>Nursery</option>
+          <option>Kindergarten 1</option>
+          <option>Kindergarten 2</option>
+          <option>Kindergarten 3</option>
+          <option>Grade 1</option><option>Grade 2</option><option>Grade 3</option>
+          <option>Grade 4</option><option>Grade 5</option><option>Grade 6</option>
+          <option>Grade 7</option><option>Grade 8</option><option>Grade 9</option>
+          <option>Grade 10</option><option>Grade 11</option><option>Grade 12</option>
+        </select>
+      </div>
+
+      <!-- รูปแบบการลา -->
+      <div>
+        <label id="leaveTypeLabel" class="block text-sm font-medium">รูปแบบการลา</label>
+        <div class="flex gap-2 mt-2">
+          <button type="button" id="btnFull" class="px-3 py-1.5 rounded bg-blue-600 text-white">ลาเต็มวัน</button>
+          <button type="button" id="btnPeriod" class="px-3 py-1.5 rounded bg-gray-200">ลาแบบเลือกคาบ</button>
+        </div>
+      </div>
+
+      <!-- Date Range สำหรับลาเต็มวัน -->
+      <div id="fullDaySection" class="grid grid-cols-2 gap-2">
         <div>
-          <label>วันที่เริ่ม</label>
-          <input type="date" id="startDate" />
+          <label id="startLabel" class="text-sm">วันที่เริ่ม</label>
+          <input type="date" class="mt-1 w-full border rounded px-3 py-2">
         </div>
         <div>
-          <label>วันที่สิ้นสุด</label>
-          <input type="date" id="endDate" />
+          <label id="endLabel" class="text-sm">วันที่สิ้นสุด</label>
+          <input type="date" class="mt-1 w-full border rounded px-3 py-2">
         </div>
       </div>
 
-      <label>วันที่ (สำหรับเลือกคาบ)</label>
-      <input type="date" id="singleDate" />
-
-      <label>คาบเรียน</label>
-      <div>
-        <label><input type="checkbox" name="period" value="คาบ 1"> คาบ 1</label>
-        <label><input type="checkbox" name="period" value="คาบ 2"> คาบ 2</label>
-        <label><input type="checkbox" name="period" value="คาบ 3"> คาบ 3</label>
-        <label><input type="checkbox" name="period" value="คาบ 4"> คาบ 4</label>
+      <!-- Date + Periods สำหรับลาแบบคาบ -->
+      <div id="periodSection" class="hidden space-y-2">
+        <div>
+          <label id="singleDateLabel" class="text-sm">วันที่</label>
+          <input type="date" class="mt-1 w-full border rounded px-3 py-2">
+        </div>
+        <div>
+          <label id="periodLabel" class="text-sm">คาบเรียนที่ต้องการลา</label>
+          <div class="grid grid-cols-2 gap-2 mt-2">
+            <label><input type="checkbox" value="คาบ 1"> คาบ 1</label>
+            <label><input type="checkbox" value="คาบ 2"> คาบ 2</label>
+            <label><input type="checkbox" value="คาบ 3"> คาบ 3</label>
+            <label><input type="checkbox" value="คาบ 4"> คาบ 4</label>
+            <label><input type="checkbox" value="คาบ 5"> คาบ 5</label>
+            <label><input type="checkbox" value="คาบ 6"> คาบ 6</label>
+            <label><input type="checkbox" value="คาบ 7"> คาบ 7</label>
+          </div>
+        </div>
       </div>
 
-      <label>เหตุผลการลา</label>
-      <textarea id="reason" rows="3"></textarea>
+      <!-- เหตุผลการลา -->
+      <div>
+        <label id="reasonLabel" class="block text-sm font-medium">เหตุผลการลา *</label>
+        <select id="reasonSelect" class="mt-1 w-full border rounded px-3 py-2" required>
+          <option value="">-- เลือกเหตุผล --</option>
+          <option value="sick">ป่วย</option>
+          <option value="sport">แข่งกีฬา</option>
+          <option value="family">ธุระครอบครัว</option>
+          <option value="other">อื่นๆ</option>
+        </select>
+        <textarea id="reasonExtra" rows="3" class="mt-2 w-full border rounded px-3 py-2 hidden" placeholder="โปรดระบุเหตุผลเพิ่มเติม"></textarea>
+      </div>
 
-      <label><input type="checkbox" id="policy"> ข้าพเจ้าได้อ่านและยอมรับนโยบายการลาของโรงเรียนแล้ว *</label>
+      <!-- นโยบาย -->
+      <div>
+        <label class="block text-sm font-medium">นโยบายการลา</label>
+        <div class="border rounded p-2 h-24 overflow-y-auto text-sm bg-gray-50">
+          เพิ่มนโยบายที่นี่_add policy here
+        </div>
+        <label class="flex items-center gap-2 text-sm mt-2">
+          <input type="checkbox" required>
+          <span id="policyLabel">ข้าพเจ้าได้อ่านและยอมรับนโยบายการลาของโรงเรียนแล้ว</span>
+        </label>
+      </div>
 
-      <button type="submit">ยืนยันการแจ้งลา</button>
+      <button id="submitBtn" type="submit" class="w-full py-2 rounded bg-blue-600 text-white">ยืนยันการแจ้งลา</button>
     </form>
   </div>
-</body>
-</html>
+
+  <script>
+    // Toggle sections
+    const btnFull = document.getElementById('btnFull');
+    const btnPeriod = document.getElementById('btnPeriod');
+    const fullDaySection = document.getElementById('fullDaySection');
+    const periodSection = document.getElementById('periodSection');
+
+    btnFull.addEventListener('click', () => {
+      btnFull.classList.add('bg-blue-600','text-white');
+      btnPeriod.classList.remove('bg-blue-600','text-white');
+      btnPeriod.classList.add('bg-gray-200');
+      fullDaySection.classList.remove('hidden');
+      periodSection.classList.add('hidden');
+    });
+
+    btnPeriod.addEventListener('click', () => {
+      btnPeriod.classList.add('bg-blue-600','text-white');
+      btnFull.classList.remove('bg-blue-600','text-white');
+      btnFull.classList.add('bg-gray-200');
+      fullDaySection.classList.add('hidden');
+      periodSection.classList.remove('hidden');
+    });
+
+    // Reason select logic
+    const reasonSelect = document.getElementById('reasonSelect');
+    const reasonExtra = document.getElementById('reasonExtra');
+    reasonSelect.addEventListener('change', () => {
+      if(reasonSelect.value === 'other'){
+        reasonExtra.classList.remove('hidden');
+        reasonExtra.required = true;
+      } else {
+        reasonExtra.classList.add('hidden');
+        reasonExtra.required = false;
+      }
+    });
+
+    // Language toggle (เหมือนเดิม)
+    const langToggle = document.getElementById('langToggle');
+    const labels = {
+      th: {
+        formTitle: "ระบบแจ้งลาเรียนออนไลน์",
+        studentLabel: "ชื่อ-นามสกุล นักเรียน *",
+        gradeLabel: "ระดับชั้น *",
+        leaveTypeLabel: "รูปแบบการลา",
+        startLabel: "วันที่เริ่ม",
+        endLabel: "วันที่สิ้นสุด",
+        singleDateLabel: "วันที่",
+        periodLabel: "คาบเรียนที่ต้องการลา",
+        reasonLabel: "เหตุผลการลา *",
+        policy
